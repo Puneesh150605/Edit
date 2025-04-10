@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glam Up - Virtual Makeup Try-On</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    
+    <!-- Face Detection Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
+</head>
+<body class="bg-pink-50 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md fixed w-full z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <span class="text-pink-500 text-2xl font-bold">Glam Up</span>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="text-pink-600 hover:text-pink-800 transition">Home</a>
+                <a href="#features" class="text-gray-700 hover:text-pink-600 transition">Features</a>
+                <a href="#try-on" class="text-gray-700 hover:text-pink-600 transition">Try On</a>
+                <a href="#about" class="text-gray-700 hover:text-pink-600 transition">About</a>
+            </div>
+            <div class="md:hidden">
+                <button id="menu-toggle" class="text-gray-700 focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white pb-4">
+            <a href="#home" class="block px-6 py-2 text-gray-700 hover:text-pink-600 transition">Home</a>
+            <a href="#features" class="block px-6 py-2 text-gray-700 hover:text-pink-600 transition">Features</a>
+            <a href="#try-on" class="block px-6 py-2 text-gray-700 hover:text-pink-600 transition">Try On</a>
+            <a href="#about" class="block px-6 py-2 text-gray-700 hover:text-pink-600 transition">About</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="pt-24 pb-12 md:pt-32 md:pb-20">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0" data-aos="fade-right" data-aos-duration="1000">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 leading-tight mb-4">
+                        Discover Your <span class="text-pink-500">Perfect Look</span>
+                    </h1>
+                    <p class="text-gray-600 text-lg mb-8">
+                        Upload your photo and instantly try on different makeup looks. 
+                        See how you'd look with various shades and styles in just seconds!
+                    </p>
+                    <a href="#try-on" class="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-full font-semibold transition transform hover:scale-105 inline-block">
+                        Try Now
+                    </a>
+                </div>
+                <div class="md:w-1/2" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="300">
+                    <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80" alt="Makeup Artist" class="rounded-lg shadow-xl w-full">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-12 bg-gradient-to-r from-pink-100 to-purple-100">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12" data-aos="fade-up">
+                <span class="text-pink-500">Amazing</span> Features
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-md transform hover:-translate-y-2 transition duration-300" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="text-pink-500 text-4xl mb-4">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Virtual Try-On</h3>
+                    <p class="text-gray-600">Upload your photo and see how different makeup products would look on you instantly.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-lg shadow-md transform hover:-translate-y-2 transition duration-300" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="text-pink-500 text-4xl mb-4">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Countless Styles</h3>
+                    <p class="text-gray-600">Choose from a variety of trending makeup styles and customize them to your preference.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-lg shadow-md transform hover:-translate-y-2 transition duration-300" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="text-pink-500 text-4xl mb-4">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Beauty Assistant</h3>
+                    <p class="text-gray-600">Get personalized beauty advice from our AI chatbot trained on makeup expertise.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Try-On Section -->
+    <section id="try-on" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12" data-aos="fade-up">
+                <span class="text-pink-500">Virtual</span> Makeup Try-On
+            </h2>
+            
+            <div class="flex flex-col md:flex-row items-start gap-8">
+                <div class="md:w-1/2 bg-pink-50 p-6 rounded-lg shadow-md" data-aos="fade-right">
+                    <div id="webcam-container" class="hidden">
+                        <video id="webcam" autoplay playsinline class="w-full h-auto rounded-lg"></video>
+                        <button id="capture-btn" class="mt-4 bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-full font-semibold transition">
+                            <i class="fas fa-camera mr-2"></i> Capture Photo
+                        </button>
+                    </div>
+                    
+                    <div id="upload-container" class="text-center py-4">
+                        <div id="preview-container" class="w-full mb-6 relative">
+                            <img id="preview-img" src="https://via.placeholder.com/400x400?text=Your+Photo+Here" alt="Preview" class="w-full h-auto rounded-lg mx-auto">
+                            <canvas id="makeup-canvas" class="absolute top-0 left-0 w-full h-full rounded-lg opacity-0 transition-opacity"></canvas>
+                            <canvas id="face-landmarks" class="absolute top-0 left-0 w-full h-full rounded-lg opacity-0 pointer-events-none"></canvas>
+                        </div>
+                        
+                        <div class="flex flex-col sm:flex-row justify-center gap-4 mb-6">
+                            <label class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-full font-semibold cursor-pointer transition inline-block">
+                                <i class="fas fa-upload mr-2"></i> Upload Photo
+                                <input type="file" id="upload-input" accept="image/*" class="hidden">
+                            </label>
+                            
+                            <button id="webcam-toggle" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-full font-semibold transition">
+                                <i class="fas fa-video mr-2"></i> Use Webcam
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2" data-aos="fade-left">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Choose Makeup Style</h3>
+                        
+                        <div class="mb-6">
+                            <label class="block text-gray-700 mb-2">Makeup Look</label>
+                            <select id="makeup-style" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500">
+                                <option value="natural">Natural Look</option>
+                                <option value="glamour">Glamour</option>
+                                <option value="smokey">Smokey Eyes</option>
+                                <option value="party">Party Ready</option>
+                                <option value="vintage">Vintage Glam</option>
+                                <option value="editorial">Editorial</option>
+                                <option value="summer">Summer Glow</option>
+                                <option value="kpop">K-Pop Inspired</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Makeup Tabs -->
+                        <div class="mb-6">
+                            <div class="flex border-b border-gray-200">
+                                <button class="makeup-tab active px-4 py-2 border-b-2 border-pink-500 text-pink-500" data-tab="lips">Lips</button>
+                                <button class="makeup-tab px-4 py-2" data-tab="eyes">Eyes</button>
+                                <button class="makeup-tab px-4 py-2" data-tab="face">Face</button>
+                                <button class="makeup-tab px-4 py-2" data-tab="brows">Brows</button>
+                            </div>
+                            
+                            <!-- Lips Tab Content -->
+                            <div id="lips-tab" class="tab-content pt-4">
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2">Lipstick Color</label>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="w-8 h-8 rounded-full bg-red-600 cursor-pointer color-swatch" data-color="red-dark" data-type="lipstick"></span>
+                                        <span class="w-8 h-8 rounded-full bg-red-400 cursor-pointer color-swatch" data-color="red" data-type="lipstick"></span>
+                                        <span class="w-8 h-8 rounded-full bg-pink-300 cursor-pointer color-swatch" data-color="pink" data-type="lipstick"></span>
+                                        <span class="w-8 h-8 rounded-full bg-pink-500 cursor-pointer color-swatch" data-color="pink-dark" data-type="lipstick"></span>
+                                        <span class="w-8 h-8 rounded-full bg-purple-400 cursor-pointer color-swatch" data-color="purple" data-type="lipstick"></span>
+                                        <span class="w-8 h-8 rounded-full bg-orange-300 cursor-pointer color-swatch" data-color="coral" data-type="lipstick"></span>
+                                        <span class="w-8 h-8 rounded-full bg-orange-500 cursor-pointer color-swatch" data-color="orange" data-type="lipstick"></span>
+                                        <span class="w-8 h-8 rounded-full bg-yellow-600 cursor-pointer color-swatch" data-color="brown" data-type="lipstick"></span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2">Lipstick Style</label>
+                                    <select id="lipstick-style" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500">
+                                        <option value="matte">Matte</option>
+                                        <option value="glossy">Glossy</option>
+                                        <option value="satin">Satin</option>
+                                        <option value="sheer">Sheer</option>
+                                        <option value="ombre">Ombre</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2">Intensity</label>
+                                    <input type="range" id="lipstick-intensity" class="w-full" min="0" max="1" step="0.1" value="0.7">
+                                </div>
+                            </div>
+                            
+                            <!-- Eyes Tab Content -->
+                            <div id="eyes-tab" class="tab-content pt-4 hidden">
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2">Eyeshadow Color</label>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="w-8 h-8 rounded-full bg-purple-300 cursor-pointer color-swatch" data-color="purple" data-type="eyeshadow"></span>
+                                        <span class="w-8 h-8 rounded-full bg-purple-600 cursor-pointer color-swatch" data-color="purple-dark" data-type="eyeshadow"></span>
+                                        <span class="w-8 h-8 rounded-full bg-blue-300 cursor-pointer color-swatch" data-color="blue" data-type="eyeshadow"></span>
+                                        <span class="w-8 h-8 rounded-full bg-pink-200 cursor-pointer color-swatch" data-color="pink" data-type="eyeshadow"></span>
+                                        <span class="w-8 h-8 rounded-full bg-brown-300 cursor-pointer color-swatch" data-color="brown" data-type="eyeshadow"></span>
+                                        <span class="w-8 h-8 rounded-full bg-gray-400 cursor-pointer color-swatch" data-color="gray" data-type="eyeshadow"></span>
+                                        <span class="w-8 h-8 rounded-full bg-emerald-300 cursor-pointer color-swatch" data-color="green" data-type="eyeshadow"></span>
+                                        <span class="w-8 h-8 rounded-full bg-amber-300 cursor-pointer color-swatch" data-color="gold" data-type="eyeshadow"></span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2">Eyeshadow Style</label>
+                                    <select id="eyeshadow-style" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500">
+                                        <option value="natural">Natural</option>
+                                        <option value="smokey">Smokey</option>
+                                        <option value="cat">Cat Eye</option>
+                                        <option value="cut-crease">Cut Crease</option>
+                                        <option value="halo">Halo</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="flex items-center gap-2 text-gray-700 mb-2">
+                                        <input type="checkbox" id="eyeliner-toggle" class="form-checkbox h-4 w-4 text-pink-500">
+                                        <span>Add Eyeliner</span>
+                                    </label>
+                                    <select id="eyeliner-style" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500">
+                                        <option value="thin">Thin</option>
+                                        <option value="medium">Medium</option>
+                                        <option value="thick">Thick</option>
+                                        <option value="wing">Winged</option>
+                                        <option value="dramatic">Dramatic Wing</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="flex items-center gap-2 text-gray-700 mb-2">
+                                        <input type="checkbox" id="mascara-toggle" class="form-checkbox h-4 w-4 text-pink-500">
+                                        <span>Add Mascara/Lashes</span>
+                                    </label>
+                                    <select id="lash-style" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500">
+                                        <option value="natural">Natural</option>
+                                        <option value="voluminous">Voluminous</option>
+                                        <option value="wispy">Wispy</option>
+                                        <option value="dramatic">Dramatic</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Face Tab Content -->
+                            <div id="face-tab" class="tab-content pt-4 hidden">
+                                <div class="mb-4">
+                                    <label class="flex items-center gap-2 text-gray-700 mb-2">
+                                        <input type="checkbox" id="foundation-toggle" class="form-checkbox h-4 w-4 text-pink-500" checked>
+                                        <span>Foundation</span>
+                                    </label>
+                                    <select id="foundation-shade" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500">
+                                        <option value="fair">Fair</option>
+                                        <option value="light">Light</option>
+                                        <option value="medium" selected>Medium</option>
+                                        <option value="tan">Tan</option>
+                                        <option value="deep">Deep</option>
+                                    </select>
+                                    <input type="range" id="foundation-coverage" class="w-full mt-2" min="0" max="1" step="0.1" value="0.5">
+                                    <span class="text-xs text-gray-500">Coverage</span>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="flex items-center gap-2 text-gray-700 mb-2">
+                                        <input type="checkbox" id="blush-toggle" class="form-checkbox h-4 w-4 text-pink-500" checked>
+                                        <span>Blush</span>
+                                    </label>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="w-8 h-8 rounded-full bg-red-200 cursor-pointer color-swatch" data-color="light-pink" data-type="blush"></span>
+                                        <span class="w-8 h-8 rounded-full bg-pink-300 cursor-pointer color-swatch" data-color="pink" data-type="blush"></span>
+                                        <span class="w-8 h-8 rounded-full bg-rose-400 cursor-pointer color-swatch" data-color="rose" data-type="blush"></span>
+                                        <span class="w-8 h-8 rounded-full bg-orange-200 cursor-pointer color-swatch" data-color="peach" data-type="blush"></span>
+                                    </div>
+                                    <input type="range" id="blush-intensity" class="w-full mt-2" min="0" max="1" step="0.1" value="0.4">
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="flex items-center gap-2 text-gray-700 mb-2">
+                                        <input type="checkbox" id="contour-toggle" class="form-checkbox h-4 w-4 text-pink-500">
+                                        <span>Contour & Highlight</span>
+                                    </label>
+                                    <select id="contour-intensity" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500">
+                                        <option value="subtle">Subtle</option>
+                                        <option value="medium">Medium</option>
+                                        <option value="defined">Defined</option>
+                                        <option value="dramatic">Dramatic</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Brows Tab Content -->
+                            <div id="brows-tab" class="tab-content pt-4 hidden">
+                                <div class="mb-4">
+                                    <label class="flex items-center gap-2 text-gray-700 mb-2">
+                                        <input type="checkbox" id="brows-toggle" class="form-checkbox h-4 w-4 text-pink-500" checked>
+                                        <span>Eyebrow Enhancement</span>
+                                    </label>
+                                    <select id="brow-style" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500">
+                                        <option value="natural">Natural</option>
+                                        <option value="defined">Defined</option>
+                                        <option value="arched">Arched</option>
+                                        <option value="straight">Straight</option>
+                                        <option value="feathered">Feathered</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2">Brow Color</label>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="w-8 h-8 rounded-full bg-yellow-800 cursor-pointer color-swatch" data-color="blonde" data-type="brow"></span>
+                                        <span class="w-8 h-8 rounded-full bg-amber-700 cursor-pointer color-swatch" data-color="auburn" data-type="brow"></span>
+                                        <span class="w-8 h-8 rounded-full bg-yellow-900 cursor-pointer color-swatch" data-color="brown" data-type="brow"></span>
+                                        <span class="w-8 h-8 rounded-full bg-gray-800 cursor-pointer color-swatch" data-color="dark-brown" data-type="brow"></span>
+                                        <span class="w-8 h-8 rounded-full bg-gray-900 cursor-pointer color-swatch" data-color="black" data-type="brow"></span>
+                                    </div>
+                                    <input type="range" id="brow-intensity" class="w-full mt-2" min="0" max="1" step="0.1" value="0.6">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button id="apply-makeup" class="w-full bg-pink-500 hover:bg-pink-600 text-white py-3 rounded-full font-semibold transition transform hover:scale-105">
+                            <i class="fas fa-magic mr-2"></i> Apply Makeup
+                        </button>
+                        
+                        <div class="mt-4 flex justify-between">
+                            <button id="save-image" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-full font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                <i class="fas fa-download mr-2"></i> Save
+                            </button>
+                            <button id="reset-image" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-full font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                <i class="fas fa-undo mr-2"></i> Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chatbot -->
+    <div id="chatbot-toggle" class="fixed bottom-6 right-6 w-14 h-14 bg-pink-500 rounded-full shadow-lg flex items-center justify-center cursor-pointer z-50 hover:bg-pink-600 transition transform hover:scale-110" onclick="document.getElementById('chatbot').style.transform='translateY(0)';document.getElementById('chatbot').style.opacity='1';">
+        <i class="fas fa-comments text-white text-2xl"></i>
+    </div>
+    
+    <div id="chatbot" class="fixed bottom-24 right-6 w-80 bg-white rounded-lg shadow-xl z-50 overflow-hidden transition-all duration-300" style="transform: translateY(100%); opacity: 0;">
+        <div class="bg-gradient-to-r from-pink-500 to-purple-500 text-white p-4 flex justify-between items-center">
+            <h3 class="font-bold">Beauty Assistant</h3>
+            <button id="close-chatbot" class="text-white focus:outline-none hover:text-gray-200" onclick="document.getElementById('chatbot').style.transform='translateY(100%)';document.getElementById('chatbot').style.opacity='0';">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div id="chat-messages" class="p-4 h-80 overflow-y-auto">
+            <div class="flex mb-4">
+                <div class="chat-bubble-bot">
+                    <p class="text-gray-800">Hi there! I'm your beauty assistant. How can I help you with makeup today?</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="border-t p-4">
+            <div class="flex">
+                <input type="text" id="chat-input" placeholder="Ask about makeup..." class="flex-1 p-2 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
+                <button id="send-message" class="bg-pink-500 text-white p-2 rounded-r-lg hover:bg-pink-600">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-6 md:mb-0">
+                    <h2 class="text-2xl font-bold text-pink-400 mb-4">Glam Up</h2>
+                    <p class="text-gray-400 max-w-md">Experience the future of makeup with our virtual try-on platform. Look your best self, digitally first.</p>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4 text-pink-300">Quick Links</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#home" class="text-gray-400 hover:text-pink-300 transition">Home</a></li>
+                            <li><a href="#features" class="text-gray-400 hover:text-pink-300 transition">Features</a></li>
+                            <li><a href="#try-on" class="text-gray-400 hover:text-pink-300 transition">Try On</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4 text-pink-300">Connect</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-400 hover:text-pink-300 text-xl transition"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-pink-300 text-xl transition"><i class="fab fa-tiktok"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-pink-300 text-xl transition"><i class="fab fa-pinterest"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-pink-300 text-xl transition"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2023 Glam Up. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/makeup.js"></script>
+    <script src="js/chatbot.js"></script>
+</body>
+</html> 
